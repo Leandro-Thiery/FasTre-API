@@ -27,6 +27,24 @@ GET: Return all list of hospitals.
 
 GET: Return a hospital by id.  
 
+### /api/v1/hospital/:id/polyclinic
+
+```json
+{
+  "id": "String",
+  "doctorName": "String",
+  "polyType": "String",
+  "schedule": {
+    "sabtu": "12:30-14:00",
+    "kamis": "10:00-12:00",
+    "selasa": "8:00-12:00",
+    "senin": "10:00-12:00"
+  }
+}
+```
+
+GET: Return all list of Polyclinics in specified Hospital ID
+
 ## /api/v1/post  
 
 Return for single post

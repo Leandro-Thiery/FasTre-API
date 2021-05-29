@@ -45,14 +45,42 @@ const getHospitalById = async (req, res, next) => {
           doc.data().phoneNum,
           doc.data().telephoneNum,
       );
-      res.send(hospital);
+      res.send({hospital});
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+// Polyclinics are obtained using Hospital's ID
+const getAllPolyclinic = async (req, res, next) => {
+  try {
+    const snapshot = await firestore
+        .collection('hospitals')
+        .doc(req.params.id)
+        .collection('polyclinics')
+        .get();
+    const polyclinics = [];
+    if (snapshot.empty) {
+      res.status(404).send('No polyclinics found');
+    } else {
+      snapshot.forEach((doc) => {
+        polyclinics.push({
+          'id': doc.id,
+          'doctorName': doc.data().doctorName,
+          'polyType': doc.data().polyType,
+          'schedule': doc.data().schedule,
+        });
+      });
+      res.send(polyclinics);
     }
   } catch (error) {
     console.log(error);
   }
 };
 
+
 module.exports = {
   getAllHospital,
   getHospitalById,
+  getAllPolyclinic,
 };
