@@ -60,8 +60,8 @@ const addPost = async (req, res, next) => {
     };
     const post = await firestore.collection('posts').add(newPost);
     res.send({
-      ...newPost,
       'id': post.id,
+      ...newPost,
     });
   } catch (error) {
     res.status(400).send('Error adding post');

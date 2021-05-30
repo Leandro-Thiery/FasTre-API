@@ -4,8 +4,29 @@ FasTre's API for viewing hospitals data and news
 # API Usage  
 
 ## /api/v1/hospital  
+GET: Return all list of hospitals.  
+Return:
+```json
+[
+  {
+    "id": "String",
+    "address": "String",
+    "email": "String",
+    "location": {
+        "_latitude": 0,
+        "_longitude": 0
+    },
+    "name": "String",
+    "phoneNum": 1234567890,
+    "telephoneNum": 1234567890
+  }
+]
+```
 
-Return for single hospital
+### /api/v1/hospital/:id  
+
+GET: Return a hospital by id.  
+Return:
 ```json
 {
     "id": "String",
@@ -21,14 +42,9 @@ Return for single hospital
 }
 ```
 
-GET: Return all list of hospitals.  
-
-### /api/v1/hospital/:id  
-
-GET: Return a hospital by id.  
 
 ### /api/v1/hospital/:id/polyclinic
-
+GET: Return all list of Polyclinics by hospital id
 ```json
 {
   "id": "String",
@@ -43,31 +59,51 @@ GET: Return a hospital by id.
 }
 ```
 
-GET: Return all list of Polyclinics in specified Hospital ID
-
 ## /api/v1/post  
 
-Return for single post
+GET: Return all list of posts  
+Return:
 ```json
-{
+[
+  {
+    "id": "String",
     "postTitle": "String",
     "postContent": "String",
     "imgURL": "String",
     "date": {
-        "_seconds": 0,
-        "_nanoseconds": 0
-    },
-    "id": "String"
+      "_seconds": 0,
+      "_nanoseconds": 0
+    }
+  }
+]
+```
+
+
+
+
+POST: Add a new post
+Request body:
+```json
+{
+  "postTitle": "String",
+  "postContent": "String",
+  "imgURL": "String"
 }
 ```
 
-"id" is not required at POST  
-"date" uses Firestore Timestamp data type, and not required at POST  
-
-GET: Return all list of posts  
-
-POST: Return the id of post  
-
+Return: 
+```json
+  {
+    "id": "String",
+    "postTitle": "String",
+    "postContent": "String",
+    "imgURL": "String",
+    "date": {
+      "_seconds": 0,
+      "_nanoseconds": 0
+    }
+  }
+```
 ### /api/v1/post/:id  
 
 GET: Return a post by id.  
