@@ -15,6 +15,7 @@ const getAllHospital = async (req, res, next) => {
           doc.id,
           doc.data().address,
           doc.data().email,
+          doc.data().imgURL,
           doc.data().location,
           doc.data().name,
           doc.data().phoneNum,
@@ -37,9 +38,10 @@ const getHospitalById = async (req, res, next) => {
       res.status(404).send('No hospital found');
     } else {
       const hospital = new Hospital(
-          doc.id,
+          parseInt(doc.id),
           doc.data().address,
           doc.data().email,
+          doc.data().imgURL,
           doc.data().location,
           doc.data().name,
           doc.data().phoneNum,
@@ -65,10 +67,8 @@ const getAllPolyclinic = async (req, res, next) => {
     } else {
       snapshot.forEach((doc) => {
         polyclinics.push({
-          'id': doc.id,
-          'doctorName': doc.data().doctorName,
-          'polyType': doc.data().polyType,
-          'schedule': doc.data().schedule,
+          'id': parseInt(doc.id),
+          'polyName': doc.data().polyName,
         });
       });
       res.send(polyclinics);
@@ -78,9 +78,82 @@ const getAllPolyclinic = async (req, res, next) => {
   }
 };
 
+const getPolyclinicById = async (req, res, next) => {
+  try {
+    const snapshot = await firestore
+        .collection('hospitals')
+        .doc(req.params.id)
+        .collection('polyclinics')
+        .doc(req.params.polyId);
+    const doc = await snapshot.get();
+    if (!doc.exists) {
+      res.status(404).send('No polyclinic found');
+    } else {
+      res.json({
+        'id': parseInt(doc.id),
+        'polyName': doc.data().polyName,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getAllSchedule = async (req, res, next) => {
+  try {
+    const snapshot = await firestore
+        .collection('hospitals')
+        .doc(req.params.id)
+        .collection('schedules')
+        .get();
+    const doctors = [];
+    if (snapshot.empty) {
+      res.status(404).send('No schedules found');
+    } else {
+      snapshot.forEach((doc) => {
+        doctors.push({
+          'doctorId': parseInt(doc.id),
+          'doctorName': doc.data().doctorName,
+          'polyId': doc.data().polyId,
+          'schedule': doc.data().schedule,
+        });
+      });
+      res.send(doctors);
+      console.log(doctors);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getScheduleById = async (req, res, next) => {
+  try {
+    const snapshot = await firestore
+        .collection('hospitals')
+        .doc(req.params.id)
+        .collection('schedules')
+        .doc(req.params.scheduleId);
+    const doc = await snapshot.get();
+    if (!doc.exists) {
+      res.status(404).send('No schedule found by Id');
+    } else {
+      res.json({
+        'doctorId': parseInt(doc.id),
+        'doctorName': doc.data().doctorName,
+        'polyId': doc.data().polyId,
+        'schedule': doc.data().schedule,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   getAllHospital,
   getHospitalById,
   getAllPolyclinic,
+  getPolyclinicById,
+  getAllSchedule,
+  getScheduleById,
 };

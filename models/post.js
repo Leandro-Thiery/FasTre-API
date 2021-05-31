@@ -1,7 +1,7 @@
 /**
- * Constructor of Queue
+ * Constructor of Post
  */
-class Queue {
+class Post {
   /**
    *
    * @param {*} id
@@ -18,4 +18,4 @@ class Queue {
     this.imgURL = imgURL;
   }
 }
-module.exports = Queue;
+module.exports = Post;

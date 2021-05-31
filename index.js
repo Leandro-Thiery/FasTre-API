@@ -9,9 +9,9 @@ app.get('/', (req, res) => {
   res.send('Welcome Home');
 });
 
-app.use('/api/v1/post', postRoutes);
+app.use('/api/v1/posts', postRoutes);
 
-app.use('/api/v1/hospital', hospitalRoutes);
+app.use('/api/v1/hospitals', hospitalRoutes);
 
 
 const port = process.env.PORT || 8000;
