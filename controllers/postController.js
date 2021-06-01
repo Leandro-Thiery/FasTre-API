@@ -54,17 +54,19 @@ const getPostById = async (req, res, next) => {
 const addPost = async (req, res, next) => {
   try {
     const data = req.body;
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth()+1;
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const dateString = `${day}/${month}/${year}, ${hours}:${minutes}`;
     const newPost = {
       ...data,
-      'date': Timestamp.fromDate(new Date()),
+      'date': dateString,
     };
     const post = await firestore.collection('posts').add(newPost);
-    res.json({
-      'id': post.id,
-      'date': post.data().date,
-      'postTitle': post.data().postTitle,
-      'postContent': post.data().postContent,
-    });
+    res.send('Succesfully added');
   } catch (error) {
     res.status(400).send('Error adding post');
     console.log(error);
@@ -75,17 +77,19 @@ const updatePost = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth()+1;
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const dateString = `${day}/${month}/${year}, ${hours}:${minutes}`;
     const newPost = {
       ...data,
-      'date': Timestamp.fromDate(new Date()),
+      'date': dateString,
     };
     const post = await firestore.collection('posts').doc(id).update(newPost);
-    res.json({
-      'id': post.id,
-      'date': post.data().date,
-      'postTitle': post.data().postTitle,
-      'postContent': post.data().postContent,
-    });
+    res.send('Succesfully updated');
   } catch (error) {
     res.status(400).send('Error updating post');
   }
