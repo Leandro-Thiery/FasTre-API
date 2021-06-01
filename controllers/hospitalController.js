@@ -77,7 +77,7 @@ const getAllPolyclinic = async (req, res, next) => {
           'polyName': doc.data().polyName,
         });
       });
-      res.send(polyclinics);
+      res.send({polyclinics});
     }
   } catch (error) {
     console.log(error);
