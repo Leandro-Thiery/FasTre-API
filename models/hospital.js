@@ -7,8 +7,11 @@ class Hospital {
    * @param {*} id
    * @param {*} address
    * @param {*} email
-   * @param {*} imgURL
-   * @param {*} location
+   * @param {*} photo1
+   * @param {*} photo2
+   * @param {*} photo3
+   * @param {*} latitude
+   * @param {*} longitude
    * @param {*} name
    * @param {*} phoneNum
    * @param {*} telephoneNum
