@@ -1,8 +1,6 @@
-const firebase = require('firebase-admin');
 const db = require('../db');
 const Post = require('../models/post');
 const firestore = db.firestore();
-const Timestamp = firebase.firestore.Timestamp;
 
 const getAllPost = async (req, res, next) => {
   try {
@@ -65,7 +63,7 @@ const addPost = async (req, res, next) => {
       ...data,
       'date': dateString,
     };
-    const post = await firestore.collection('posts').add(newPost);
+    await firestore.collection('posts').add(newPost);
     res.send('Succesfully added');
   } catch (error) {
     res.status(400).send('Error adding post');
@@ -88,7 +86,7 @@ const updatePost = async (req, res, next) => {
       ...data,
       'date': dateString,
     };
-    const post = await firestore.collection('posts').doc(id).update(newPost);
+    await firestore.collection('posts').doc(id).update(newPost);
     res.send('Succesfully updated');
   } catch (error) {
     res.status(400).send('Error updating post');
