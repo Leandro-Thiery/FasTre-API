@@ -117,12 +117,12 @@ const getAllSchedule = async (req, res, next) => {
       res.status(404).send('No schedules found');
     } else {
       snapshot.forEach((doc) => {
-        doctors.push({
-          'doctorId': parseInt(doc.id),
-          'doctorName': doc.data().doctorName,
-          'polyId': doc.data().polyId,
-          'schedule': doc.data().schedule,
-        });
+        const data = doc.data();
+        const doctor = {
+          'doctorId': doc.id,
+          ...data,
+        };
+        doctors.push(doctor);
       });
       res.send(doctors);
       console.log(doctors);
@@ -145,9 +145,7 @@ const getScheduleById = async (req, res, next) => {
     } else {
       res.json({
         'doctorId': parseInt(doc.id),
-        'doctorName': doc.data().doctorName,
-        'polyId': doc.data().polyId,
-        'schedule': doc.data().schedule,
+        ...doc.data(),
       });
     }
   } catch (error) {
