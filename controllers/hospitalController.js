@@ -15,8 +15,11 @@ const getAllHospital = async (req, res, next) => {
           doc.id,
           doc.data().address,
           doc.data().email,
-          doc.data().imgURL,
-          doc.data().location,
+          doc.data().photo1,
+          doc.data().photo2,
+          doc.data().photo3,
+          doc.data().latitude,
+          doc.data().longitude,
           doc.data().name,
           doc.data().phoneNum,
           doc.data().telephoneNum,
@@ -41,13 +44,16 @@ const getHospitalById = async (req, res, next) => {
           parseInt(doc.id),
           doc.data().address,
           doc.data().email,
-          doc.data().imgURL,
-          doc.data().location,
+          doc.data().photo1,
+          doc.data().photo2,
+          doc.data().photo3,
+          doc.data().latitude,
+          doc.data().longitude,
           doc.data().name,
           doc.data().phoneNum,
           doc.data().telephoneNum,
       );
-      res.send({hospital});
+      res.send(hospital);
     }
   } catch (error) {
     console.log(error);
