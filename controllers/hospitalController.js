@@ -53,7 +53,7 @@ const getHospitalById = async (req, res, next) => {
           doc.data().phoneNum,
           doc.data().telephoneNum,
       );
-      res.send(hospital);
+      res.send({hospital});
     }
   } catch (error) {
     console.log(error);
