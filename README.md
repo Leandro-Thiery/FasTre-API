@@ -106,21 +106,15 @@ Return:
   "posts": [
     {
       "id": "String",
-      "date": {
-        "_seconds": 1622467753,
-        "_nanoseconds": 667000000
-      },
+      "date": "String",
       "postTitle": "String",
       "postContent": "String",
       "imgURL": "String"
     },
     {
       "id": "String",
-      "date": {
-        "_seconds": 1622467753,
-        "_nanoseconds": 667000000
-      },
-      "postTitle": "Test post baru",
+      "date": "String",
+      "postTitle": "String",
       "postContent": "String",
       "imgURL": "String"
     }
@@ -141,21 +135,7 @@ Request body:
 }
 ```
 
-Return: 
-```json
-{
-  "post": {
-    "id": "String",
-    "date": {
-      "_seconds": 1622467753,
-      "_nanoseconds": 667000000
-    },
-    "postTitle": "String",
-    "postContent": "String",
-    "imgURL": "String"
-  }
-}
-```
+
 ### /api/v1/post/:id  
 
 GET: Return a post by id.  
@@ -166,9 +146,6 @@ Return:
     "postTitle": "String",
     "postContent": "String",
     "imgURL": "String",
-    "date": {
-      "_seconds": 0,
-      "_nanoseconds": 0
-    }
+    "date": "String",
   }
 ```
