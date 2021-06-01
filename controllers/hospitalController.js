@@ -112,7 +112,7 @@ const getAllSchedule = async (req, res, next) => {
         .doc(req.params.id)
         .collection('schedules')
         .get();
-    const doctors = [];
+    const schedules = [];
     if (snapshot.empty) {
       res.status(404).send('No schedules found');
     } else {
@@ -122,10 +122,10 @@ const getAllSchedule = async (req, res, next) => {
           'doctorId': doc.id,
           ...data,
         };
-        doctors.push(doctor);
+        schedules.push(doctor);
       });
-      res.send(doctors);
-      console.log(doctors);
+      res.send({schedules});
+      console.log(schedules);
     }
   } catch (error) {
     console.log(error);
