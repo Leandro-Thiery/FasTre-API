@@ -22,7 +22,7 @@ const getAllPost = async (req, res, next) => {
         );
         posts.push(post);
       });
-      res.send(posts);
+      res.send({posts});
       console.log(posts);
     }
   } catch (error) {
@@ -44,7 +44,7 @@ const getPostById = async (req, res, next) => {
           doc.data().postContent,
           doc.data().imgURL,
       );
-      res.send(post);
+      res.send({post});
     }
   } catch (error) {
     console.log(error);
@@ -59,9 +59,11 @@ const addPost = async (req, res, next) => {
       'date': Timestamp.fromDate(new Date()),
     };
     const post = await firestore.collection('posts').add(newPost);
-    res.send({
+    res.json({
       'id': post.id,
-      ...newPost,
+      'date': post.data().date,
+      'postTitle': post.data().postTitle,
+      'postContent': post.data().postContent,
     });
   } catch (error) {
     res.status(400).send('Error adding post');
@@ -69,8 +71,29 @@ const addPost = async (req, res, next) => {
   }
 };
 
+const updatePost = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const newPost = {
+      ...data,
+      'date': Timestamp.fromDate(new Date()),
+    };
+    const post = await firestore.collection('posts').doc(id).update(newPost);
+    res.json({
+      'id': post.id,
+      'date': post.data().date,
+      'postTitle': post.data().postTitle,
+      'postContent': post.data().postContent,
+    });
+  } catch (error) {
+    res.status(400).send('Error updating post');
+  }
+};
+
 module.exports = {
   getAllPost,
   getPostById,
   addPost,
+  updatePost,
 };
