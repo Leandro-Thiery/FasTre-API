@@ -8,19 +8,21 @@ GET: Return all list of hospitals.
 Return:
 ```json
 [
-  {
+{
+  "hospital": {
     "id": 1,
     "address": "String",
     "email": "String",
-    "imgURL": ["String"],
-    "location": {
-        "_latitude": 0,
-        "_longitude": 0
-    },
-    "name": "String",
-    "phoneNum": 1234567890,
-    "telephoneNum": 1234567890
+    "photo1": "String",
+    "photo2": "String",
+    "photo3": "String",
+    "latitude": "-6.325234113918052",
+    "longitude": "106.74437070716637",
+    "name": "RS Sari Asih Ciputat",
+    "phoneNum": 628161913838,
+    "telephoneNum": 217410808
   }
+}
 ]
 ```
 

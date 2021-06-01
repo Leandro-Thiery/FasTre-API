@@ -26,7 +26,7 @@ const getAllHospital = async (req, res, next) => {
       );
       hospitals.push(hospital);
     });
-    res.send(hospitals);
+    res.send({hospitals});
     console.log(hospitals);
   } catch (error) {
     console.log(error);
