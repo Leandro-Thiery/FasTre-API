@@ -93,9 +93,21 @@ const updatePost = async (req, res, next) => {
   }
 };
 
+const deletePost = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    await firestore.collection('posts').doc(id).delete();
+    res.send('Succesfully deleted');
+  } catch (error) {
+    console.log(error);
+    res.status(400).send('Error deleting post');
+  }
+};
+
 module.exports = {
   getAllPost,
   getPostById,
   addPost,
   updatePost,
+  deletePost,
 };

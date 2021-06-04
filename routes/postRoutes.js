@@ -4,6 +4,7 @@ const {
   getPostById,
   addPost,
   updatePost,
+  deletePost,
 } = require('../controllers/postController');
 
 // eslint-disable-next-line new-cap
@@ -15,6 +16,7 @@ router.route('/')
 
 router.route('/:id')
     .get(getPostById)
-    .put(updatePost);
+    .put(updatePost)
+    .delete(deletePost);
 
 module.exports = router;
