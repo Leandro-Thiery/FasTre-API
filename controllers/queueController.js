@@ -127,7 +127,7 @@ const addQueue = async (req, res, next) => {
       };
 
       const add = await ref.collection('queues').add(queue);
-      res.send({
+      res.status(201).send({
         'queueId': add.id,
       });
     }

@@ -64,7 +64,7 @@ const addPost = async (req, res, next) => {
       'date': dateString,
     };
     await firestore.collection('posts').add(newPost);
-    res.send('Succesfully added');
+    res.status(201).send('Succesfully added');
   } catch (error) {
     res.status(400).send('Error adding post');
     console.log(error);
