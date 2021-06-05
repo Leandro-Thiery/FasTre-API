@@ -66,7 +66,31 @@ const getQueueById = async (req, res, next) => {
 const addQueue = async (req, res, next) => {
   try {
     const data = req.body;
-    const date = new Date(req.body.date);
+    let date = new Date();
+    let day = req.body.scheduledDay;
+
+    const ref = await firestore.collection('hospitals')
+        .doc(req.params.id).collection('polyclinics')
+        .doc(req.params.polyId);
+
+    const days = await ref.get();
+    schedule = days.data().schedule;
+
+    if (!schedule.includes(day)) {
+      return res.status(401).send('Invalid scheduled day');
+    };
+
+
+    // For days on the next week
+    if (day < date.getDay()) {
+      day += 7;
+    }
+    // Update by time difference
+    if (date.getDay()!=day) {
+      const newDate = date.getTime() + (86400000 * (day - date.getDay()));
+      date = new Date(newDate);
+    }
+
     const start = new Date(date);
     start.setHours(0, 0, 0, 0);
     const end = new Date(date);
@@ -76,9 +100,6 @@ const addQueue = async (req, res, next) => {
     let number = 1;
     let time = 0;
 
-    const ref = await firestore.collection('hospitals')
-        .doc(req.params.id).collection('polyclinics')
-        .doc(req.params.polyId);
     const snapshot = await ref.collection('queues')
         .where('date', '>=', startDate)
         .where('date', '<=', endDate)
@@ -95,9 +116,11 @@ const addQueue = async (req, res, next) => {
       };
 
       const add = await ref.collection('queues').add(queue);
-      res.send({
+      const medicalRecord = {
         'queueId': add.id,
-      });
+        ...queue,
+      };
+      res.send({medicalRecord});
     } else {
       snapshot.forEach((doc) => {
         if (doc.data().number > number) {
@@ -111,12 +134,12 @@ const addQueue = async (req, res, next) => {
           req.body.scheduledHour,
           req.body.scheduledMinute);
 
-      console.log(input);
 
       await axios.post(URL, {
         data: input,
       }).then((response) => {
         time += response.data.result[0];
+        console.log(response.data.result[0]);
       });
 
       const queue = {
@@ -130,6 +153,7 @@ const addQueue = async (req, res, next) => {
       const add = await ref.collection('queues').add(queue);
       res.status(201).send({
         'queueId': add.id,
+        ...queue,
       });
     }
   } catch (error) {
