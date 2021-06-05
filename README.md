@@ -165,20 +165,34 @@ Return:
 
 
 ### /api/v1/hospitals/:id/polyclinics/:polyId/queues/
-POST: Add a new Queue
+POST: Add a new Queue  
 *Required*
 ```json
 {
-  "date": 1234567890,
-  "userId": "Pasien Ketiga",
-  "scheduledHour": 10,
-  "scheduledMinute": 30
+    "userId": "String",
+    "scheduledDay": 1,
+    "scheduledHour": 10,
+    "scheduledMinute": 30
 }
 ```
 Return :
 ```json
 {
-  "queueId": "Generated Id"
+  "medicalRecord": {
+    "queueId": "String",
+    "polyId": 1,
+    "userId": "String",
+    "scheduledDay": 1,
+    "scheduledHour": 10,
+    "scheduledMinute": 30,
+    "number": 3,
+    "status": "OnGoing",
+    "date": {
+      "_seconds": 1623069737,
+      "_nanoseconds": 941000000
+    },
+    "estimatedTime": 2.608834743499756
+  }
 }
 ```
 

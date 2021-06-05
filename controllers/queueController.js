@@ -54,6 +54,7 @@ const getQueueById = async (req, res, next) => {
       res.status(404).send('No queue found');
     } else {
       res.send({
+        'polyId': parseInt(req.params.polyId),
         ...doc.data(),
       });
     }
@@ -118,7 +119,7 @@ const addQueue = async (req, res, next) => {
       const add = await ref.collection('queues').add(queue);
       const medicalRecord = {
         'queueId': add.id,
-        'polyId': req.params.polyId,
+        'polyId': parseInt(req.params.polyId),
         ...queue,
       };
       res.send({medicalRecord});
@@ -154,7 +155,7 @@ const addQueue = async (req, res, next) => {
       const add = await ref.collection('queues').add(queue);
       const medicalRecord = {
         'queueId': add.id,
-        'polyId': req.params.polyId,
+        'polyId': parseInt(req.params.polyId),
         ...queue,
       };
       res.status(201).send({medicalRecord});
