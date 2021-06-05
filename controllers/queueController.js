@@ -117,12 +117,11 @@ const addQueue = async (req, res, next) => {
       };
 
       const add = await ref.collection('queues').add(queue);
-      const medicalRecord = {
+      res.send({
         'queueId': add.id,
         'polyId': parseInt(req.params.polyId),
         ...queue,
-      };
-      res.send({medicalRecord});
+      });
     } else {
       snapshot.forEach((doc) => {
         if (doc.data().number > number) {
@@ -153,12 +152,12 @@ const addQueue = async (req, res, next) => {
       };
 
       const add = await ref.collection('queues').add(queue);
-      const medicalRecord = {
+
+      res.status(201).send({
         'queueId': add.id,
         'polyId': parseInt(req.params.polyId),
         ...queue,
-      };
-      res.status(201).send({medicalRecord});
+      });
     }
   } catch (error) {
     console.log(error);

@@ -200,16 +200,18 @@ Return :
 GET: Return the details of specified queue
 ```json
 {
-  "estimatedTime": 60.09811210632324,
-  "scheduledHour": 10,
-  "scheduledMinute": 30,
-  "userId": "Pasien Ketiga",
-  "number": 9,
-  "status": "OnGoing",
+  "polyId": 1,
   "date": {
-    "_seconds": 1622480400,
-    "_nanoseconds": 0
-  }
+    "_seconds": 1623069737,
+    "_nanoseconds": 941000000
+  },
+  "status": "OnGoing",
+  "estimatedTime": 2.608834743499756,
+  "userId": "Test Antrian",
+  "scheduledDay": 1,
+  "scheduledHour": 10,
+  "number": 3,
+  "scheduledMinute": 30
 }
 ```
 
