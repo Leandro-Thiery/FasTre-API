@@ -118,6 +118,7 @@ const addQueue = async (req, res, next) => {
       const add = await ref.collection('queues').add(queue);
       const medicalRecord = {
         'queueId': add.id,
+        'polyId': req.params.polyId,
         ...queue,
       };
       res.send({medicalRecord});
@@ -151,10 +152,12 @@ const addQueue = async (req, res, next) => {
       };
 
       const add = await ref.collection('queues').add(queue);
-      res.status(201).send({
+      const medicalRecord = {
         'queueId': add.id,
+        'polyId': req.params.polyId,
         ...queue,
-      });
+      };
+      res.status(201).send({medicalRecord});
     }
   } catch (error) {
     console.log(error);
