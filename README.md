@@ -178,21 +178,19 @@ POST: Add a new Queue
 Return :
 ```json
 {
-  "medicalRecord": {
-    "queueId": "String",
-    "polyId": 1,
-    "userId": "String",
-    "scheduledDay": 1,
-    "scheduledHour": 10,
-    "scheduledMinute": 30,
-    "number": 3,
-    "status": "OnGoing",
-    "date": {
-      "_seconds": 1623069737,
-      "_nanoseconds": 941000000
-    },
-    "estimatedTime": 2.608834743499756
-  }
+  "queueId": "String",
+  "polyId": 1,
+  "userId": "String",
+  "scheduledDay": 1,
+  "scheduledHour": 10,
+  "scheduledMinute": 30,
+  "number": 3,
+  "status": "OnGoing",
+  "date": {
+    "_seconds": 1623069737,
+    "_nanoseconds": 941000000
+  },
+  "estimatedTime": 2.608834743499756
 }
 ```
 
@@ -214,6 +212,44 @@ GET: Return the details of specified queue
   "scheduledMinute": 30
 }
 ```
+
+### /api/v1/hospitals/:id/polyclinics/:polyId/queues/user/:userId
+GET: Return the queues by userId
+```json
+{
+  "queues": [
+    {
+      "queueId": "1NPPMQFKRXaMCVGFdr54",
+      "scheduledDay": 1,
+      "status": "OnGoing",
+      "scheduledHour": 10,
+      "date": {
+        "_seconds": 1623069737,
+        "_nanoseconds": 941000000
+      },
+      "userId": "Test Antrian",
+      "number": 3,
+      "scheduledMinute": 30,
+      "estimatedTime": 2.608834743499756
+    },
+    {
+      "queueId": "SKOSwfF6D5dGvlgi1zDI",
+      "scheduledDay": 1,
+      "scheduledMinute": 30,
+      "estimatedTime": 0,
+      "userId": "Test Antrian",
+      "scheduledHour": 10,
+      "date": {
+        "_seconds": 1623065098,
+        "_nanoseconds": 284000000
+      },
+      "status": "OnGoing",
+      "number": 1
+    },
+  ]
+}
+```
+
 
 ### /api/v1/hospitals/:id/polyclinics/:polyId/currentNumber
 GET: Return the currentNumber of queue in specified polyId

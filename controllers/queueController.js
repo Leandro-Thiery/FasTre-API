@@ -28,11 +28,7 @@ const getAllQueue = async (req, res, next) => {
       snapshot.forEach((doc) => {
         const queue = {
           'id': doc.id,
-          'userId': doc.data().userId,
-          'number': doc.data().number,
-          'estimatedMin': doc.data().estimatedMin,
-          'date': doc.data().date,
-          'status': doc.data().status,
+          ...doc.data(),
         };
         queues.push(queue);
       });
@@ -60,7 +56,33 @@ const getQueueById = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    res.send('Error getting queue');
+    res.status(404).send('Error getting queue');
+  }
+};
+
+const getQueueByUserId = async (req, res, next) => {
+  try {
+    const snapshot = await firestore.collection('hospitals')
+        .doc(req.params.id).collection('polyclinics')
+        .doc(req.params.polyId).collection('queues')
+        .where('userId', '==', req.params.userId)
+        .get();
+    if (snapshot.empty) {
+      res.status(404).send('No queue found');
+    } else {
+      const queues = [];
+      snapshot.forEach((doc) => {
+        const queue = {
+          'queueId': doc.id,
+          ...doc.data(),
+        };
+        queues.push(queue);
+      });
+      res.send({queues});
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).send('Error getting queue');
   }
 };
 
@@ -205,5 +227,6 @@ module.exports = {
   getAllQueue,
   addQueue,
   getQueueById,
+  getQueueByUserId,
   getCurrentNumber,
 };
