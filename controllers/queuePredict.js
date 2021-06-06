@@ -82,17 +82,17 @@ const setInput = async (id, polyId, number,
     numAddOns += 1;
   });
 
-  const numAddOnsLastW2 = await ref.collection('queues')
-      .where('date', '>=', startDate)
-      .where('date', '<=', datew2)
-      .where('status', '==', 'OnGoing')
-      .orderBy('date', 'desc')
-      .orderBy('number', 'asc')
-      .get();
-  let numAddOnsW2 = 0;
-  numAddOnsLastW2.forEach((doc) => {
-    numAddOnsW2 += 1;
-  });
+  // const numAddOnsLastW2 = await ref.collection('queues')
+  //     .where('date', '>=', startDate)
+  //     .where('date', '<=', datew2)
+  //     .where('status', '==', 'OnGoing')
+  //     .orderBy('date', 'desc')
+  //     .orderBy('number', 'asc')
+  //     .get();
+  // let numAddOnsW2 = 0;
+  // numAddOnsLastW2.forEach((doc) => {
+  //   numAddOnsW2 += 1;
+  // });
 
   if (number == 1) {
     input[0][9] = 0;
@@ -116,7 +116,7 @@ const setInput = async (id, polyId, number,
   input[0][16] = numCompletedW2;
   input[0][17] = numCompletedW3;
   input[0][23] = numAddOns;
-  input[0][24] = numAddOnsW2;
+  // input[0][24] = numAddOnsW2;
   input[0][26] = scheduledHour;
   input[0][27] = scheduledMinute;
 
