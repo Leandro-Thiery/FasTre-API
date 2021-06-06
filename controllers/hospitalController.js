@@ -1,6 +1,6 @@
-const firebase = require('../db');
+const db = require('../db');
 const Hospital = require('../models/hospital');
-const firestore = firebase.firestore();
+const firestore = db.firestore();
 
 const getAllHospital = async (req, res, next) => {
   try {
