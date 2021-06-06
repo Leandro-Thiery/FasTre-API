@@ -213,43 +213,6 @@ GET: Return the details of specified queue
 }
 ```
 
-### /api/v1/hospitals/:id/polyclinics/:polyId/queues/user/:userId
-GET: Return the queues by userId
-```json
-{
-  "queues": [
-    {
-      "queueId": "1NPPMQFKRXaMCVGFdr54",
-      "scheduledDay": 1,
-      "status": "OnGoing",
-      "scheduledHour": 10,
-      "date": {
-        "_seconds": 1623069737,
-        "_nanoseconds": 941000000
-      },
-      "userId": "Test Antrian",
-      "number": 3,
-      "scheduledMinute": 30,
-      "estimatedTime": 2.608834743499756
-    },
-    {
-      "queueId": "SKOSwfF6D5dGvlgi1zDI",
-      "scheduledDay": 1,
-      "scheduledMinute": 30,
-      "estimatedTime": 0,
-      "userId": "Test Antrian",
-      "scheduledHour": 10,
-      "date": {
-        "_seconds": 1623065098,
-        "_nanoseconds": 284000000
-      },
-      "status": "OnGoing",
-      "number": 1
-    },
-  ]
-}
-```
-
 
 ### /api/v1/hospitals/:id/polyclinics/:polyId/currentNumber
 GET: Return the currentNumber of queue in specified polyId
@@ -257,5 +220,47 @@ GET: Return the currentNumber of queue in specified polyId
 {
   "polyId": "1",
   "currentNumber": 3
+}
+```
+
+## /api/v1/user
+### /api/v1/user/:userId
+GET: Return the queues by userId
+```json
+{
+  "queues": [
+    {
+      "queueId": "1NPPMQFKRXaMCVGFdr54",
+      "polyId": "1",
+      "hospitalId": "1",
+      "estimatedTime": 2.608834743499756,
+      "status": "OnGoing",
+      "scheduledMinute": 30,
+      "date": {
+        "_seconds": 1623069737,
+        "_nanoseconds": 941000000
+      },
+      "number": 3,
+      "scheduledDay": 1,
+      "scheduledHour": 10,
+      "userId": "Test Antrian"
+    },
+    {
+      "queueId": "1NPPMQFKRXaMCVGFdr54",
+      "polyId": "2",
+      "hospitalId": "1",
+      "estimatedTime": 2.608834743499756,
+      "status": "OnGoing",
+      "scheduledMinute": 30,
+      "date": {
+        "_seconds": 1623069737,
+        "_nanoseconds": 941000000
+      },
+      "number": 3,
+      "scheduledDay": 1,
+      "scheduledHour": 10,
+      "userId": "Test Antrian"
+    },
+  ]
 }
 ```
