@@ -120,23 +120,27 @@ const addQueue = async (req, res, next) => {
     end.setHours(23, 59, 59, 999);
     const startDate = Timestamp.fromDate(start);
     const endDate = Timestamp.fromDate(end);
-    let number = 1;
+    let number = 0;
     let time = 0;
 
-    const snapshot = await ref.collection('queues')
-        .where('date', '>=', startDate)
-        .where('date', '<=', endDate)
-        .orderBy('date', 'desc')
-        .orderBy('number', 'desc')
-        .get();
-    if (snapshot.empty) {
+    const snapshot = await ref.collection('summary')
+        .doc(date.toDateString()).get();
+
+    if (!snapshot.exists) {
       const queue = {
         ...data,
-        'number': number,
+        'number': number + 1,
         'status': 'OnGoing',
         'date': Timestamp.fromDate(date),
         'estimatedTime': time,
       };
+
+      await ref.collection('summary')
+          .doc(date.toDateString())
+          .set({
+            'number': number + 1,
+            'estimatedTime': time,
+          });
 
       const add = await ref.collection('queues').add(queue);
       res.send({
@@ -145,18 +149,13 @@ const addQueue = async (req, res, next) => {
         ...queue,
       });
     } else {
-      snapshot.forEach((doc) => {
-        if (doc.data().number > number) {
-          number = doc.data().number;
-          time += doc.data().estimatedTime;
-        };
-      });
+      time = snapshot.data().estimatedTime;
+      number = snapshot.data().number;
 
       input = await setInput(req.params.id, req.params.polyId, number,
           date, startDate, endDate,
           req.body.scheduledHour,
           req.body.scheduledMinute);
-
 
       await axios.post(URL, {
         data: input,
@@ -172,6 +171,13 @@ const addQueue = async (req, res, next) => {
         'date': Timestamp.fromDate(date),
         'estimatedTime': time,
       };
+
+      await ref.collection('summary')
+          .doc(date.toDateString())
+          .set({
+            'number': number + 1,
+            'estimatedTime': time,
+          });
 
       const add = await ref.collection('queues').add(queue);
 
@@ -189,30 +195,18 @@ const addQueue = async (req, res, next) => {
 const getCurrentNumber = async (req, res, next) => {
   try {
     const date = new Date(req.body.date);
-    const start = new Date(date);
-    start.setHours(0, 0, 0, 0);
-    const end = new Date(date);
-    end.setHours(23, 59, 59, 999);
-    const startDate = Timestamp.fromDate(start);
-    const endDate = Timestamp.fromDate(end);
-
     const ref = await firestore.collection('hospitals')
         .doc(req.params.id).collection('polyclinics')
         .doc(req.params.polyId);
 
-    const current = await ref.collection('queues')
-        .where('date', '>=', startDate)
-        .where('date', '<=', endDate)
-        .where('status', '==', 'OnGoing')
-        .orderBy('date', 'desc')
-        .orderBy('number', 'asc')
-        .get();
-    let currentNumber = 1;
-    current.forEach((doc) => {
-      if (doc.data().number > currentNumber) {
-        currentNumber = doc.data().number;
-      };
-    });
+    const test = await ref.collection('summary').doc(date.toDateString()).get();
+
+    if (!test.exists) {
+      return res.status(401).send('No number found');
+    }
+
+    const currentNumber = test.data().number;
+
     res.json({
       'polyId': req.params.polyId,
       'currentNumber': currentNumber,
