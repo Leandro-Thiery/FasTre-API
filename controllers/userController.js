@@ -20,8 +20,8 @@ const getAllQueueByUserId = async (req, res, next) => {
           const data = queue.data();
           const newQueue = {
             'queueId': queue.id,
-            'polyId': polyclinic.id,
-            'hospitalId': hospital.id,
+            'polyId': parseInt(polyclinic.id),
+            'hospitalId': parseInt(hospital.id),
             ...data,
           };
           queues.push(newQueue);
