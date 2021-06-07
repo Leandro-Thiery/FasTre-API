@@ -210,9 +210,9 @@ GET: Return the details of specified queue
   "scheduledHour": 10,
   "number": 3,
   "scheduledMinute": 30
-}
+} 
 ```
-
+PUT: Edit the 'status' of specified queue to 'Finished'
 
 ### /api/v1/hospitals/:id/polyclinics/:polyId/currentNumber
 GET: Return the currentNumber of queue in specified polyId

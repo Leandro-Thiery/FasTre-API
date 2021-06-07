@@ -12,7 +12,8 @@ const {
   addQueue,
   getCurrentNumber,
   getQueueById,
-  getQueueByUserId} = require('../controllers/queueController');
+  getQueueByUserId,
+  editQueueById} = require('../controllers/queueController');
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -27,7 +28,9 @@ router.route('/:id/polyclinics/:polyId').get(getPolyclinicById);
 
 router.route('/:id/polyclinics/:polyId/queues').get(getAllQueue).post(addQueue);
 
-router.route('/:id/polyclinics/:polyId/queues/:queueId').get(getQueueById);
+router.route('/:id/polyclinics/:polyId/queues/:queueId')
+    .get(getQueueById)
+    .put(editQueueById);
 
 router.route('/:id/polyclinics/:polyId/queues/user/:userId')
     .get(getQueueByUserId);
