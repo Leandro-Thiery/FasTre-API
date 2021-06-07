@@ -139,6 +139,7 @@ const addQueue = async (req, res, next) => {
           .doc(date.toDateString())
           .set({
             'number': number + 1,
+            'currentNumber': 1,
             'estimatedTime': time,
           });
 
@@ -205,7 +206,7 @@ const getCurrentNumber = async (req, res, next) => {
       return res.status(401).send('No number found');
     }
 
-    const currentNumber = test.data().number;
+    const currentNumber = test.data().currentNumber;
 
     res.json({
       'polyId': req.params.polyId,
@@ -217,10 +218,49 @@ const getCurrentNumber = async (req, res, next) => {
   }
 };
 
+const editQueueById = async (req, res, next) => {
+  try {
+    const ref = await firestore.collection('hospitals')
+        .doc(req.params.id).collection('polyclinics')
+        .doc(req.params.polyId);
+
+    const queue = await ref.collection('queues')
+        .doc(req.params.queueId).get();
+
+    const timestamp = queue.data().date;
+
+    if (queue.data().status == 'Finished') {
+      return res.status(401).send('Queue is already Finished');
+    }
+
+    await ref.collection('queues')
+        .doc(req.params.queueId).set({
+          'status': 'Finished',
+        }, {merge: true});
+
+    const date = timestamp.toDate();
+
+    const summary = await ref.collection('summary')
+        .doc(date.toDateString()).get();
+
+    const number = summary.data().currentNumber;
+
+    await ref.collection('summary')
+        .doc(date.toDateString()).set({
+          'currentNumber': number + 1,
+        }, {merge: true});
+    res.send('Queue changed to Finished');
+  } catch (error) {
+    console.log(error);
+    res.send('Queue Not Found');
+  }
+};
+
 module.exports = {
   getAllQueue,
   addQueue,
   getQueueById,
   getQueueByUserId,
   getCurrentNumber,
+  editQueueById,
 };
