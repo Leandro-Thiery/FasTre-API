@@ -62,23 +62,39 @@ const getHospitalById = async (req, res, next) => {
 // Polyclinics are obtained using Hospital's ID
 const getAllPolyclinic = async (req, res, next) => {
   try {
+    const polyclinics = [];
+    const date = new Date();
     const snapshot = await firestore
         .collection('hospitals')
         .doc(req.params.id)
         .collection('polyclinics')
         .get();
-    const polyclinics = [];
+
     if (snapshot.empty) {
-      res.status(404).send('No polyclinics found');
-    } else {
-      snapshot.forEach((doc) => {
-        polyclinics.push({
-          'id': parseInt(doc.id),
-          'polyName': doc.data().polyName,
-        });
-      });
-      res.send({polyclinics});
+      return res.status(401).send('No Polyclinics Found');
     }
+
+    await Promise.all(snapshot.docs.map(async (polyclinic) => {
+      const polyclinicSnapshot = await firestore.collection('hospitals')
+          .doc(req.params.id).collection('polyclinics')
+          .doc(polyclinic.id).collection('summary')
+          .doc(date.toDateString()).get();
+      if (!polyclinicSnapshot.exists) {
+        polyclinics.push({
+          'id': parseInt(polyclinic.id),
+          'polyName': polyclinic.data().polyName,
+          'currentNumber': 0,
+        });
+      } else {
+        polyclinics.push({
+          'id': parseInt(polyclinic.id),
+          'polyName': polyclinic.data().polyName,
+          'currentNumber': polyclinicSnapshot.data().number,
+        });
+      }
+    }));
+
+    res.send({polyclinics});
   } catch (error) {
     console.log(error);
   }
