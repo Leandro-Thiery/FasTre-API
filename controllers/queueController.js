@@ -3,7 +3,7 @@ const db = require('../db');
 const firestore = db.firestore();
 const Timestamp = firebase.firestore.Timestamp;
 const axios = require('axios');
-const URL = 'https://waitestimatorapp-r6te2wbmrq-et.a.run.app/predict';
+const URL = process.env.ML_URL || 'https://waitestimatorapp-r6te2wbmrq-et.a.run.app/predict';
 const {setInput} = require('./queuePredict');
 
 

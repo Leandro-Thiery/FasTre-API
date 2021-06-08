@@ -17,6 +17,5 @@ app.use('/api/v1/hospitals', hospitalRoutes);
 app.use('/api/v1/user', userRoutes);
 
 
-const port = process.env.PORT;
-const url = process.env.ML_URL;
-app.listen(port, () => console.log(`listening on port ${port} and ${url}`));
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`listening on port ${port}`));
