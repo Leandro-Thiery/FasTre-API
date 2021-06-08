@@ -1,6 +1,14 @@
 # FasTre-API  
 FasTre's API for viewing hospitals data and news  
 
+# Setup
+* Clone the repository
+* Run `npm install` in directory to install dependencies
+* Upload your own Firestore Service Account to connect to your own Firestore Database
+* Rename the serviceAccount file on db.js to your own file
+* Run the application with `node index.js`
+* Application should be running on localhost with PORT or 8000 as port
+
 # API Usage  
 
 ## /api/v1/hospitals  
