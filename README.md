@@ -1,5 +1,5 @@
 # FasTre-API  
-FasTre's API for viewing hospitals data and news  
+FasTre's API for viewing hospitals data and news
 
 # Setup
 * Clone the repository
@@ -8,6 +8,12 @@ FasTre's API for viewing hospitals data and news
 * Rename the serviceAccount file on db.js to your own file
 * Run the application with `node index.js`
 * Application should be running on localhost with PORT or 8000 as port
+
+# Deployment in Google Cloud
+* Deployed an instance in Compute Engine and enable HTTP traffic
+* Clone code from repository
+* Setup a cronjob to run program on reboot or startup
+
 
 # API Usage  
 
