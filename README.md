@@ -10,10 +10,7 @@ FasTre's API for viewing hospitals data and news
 * Application should be running on localhost with PORT or 8000 as port
 
 # Deployment in Google Cloud
-* Deployed an instance in Compute Engine and enable HTTP traffic
-* Clone code from repository
-* Setup a cronjob to run program on reboot or startup
-
+GCP is also used to connect the mobile app (code is provided in [this repository](https://github.com/Leonardus028/FasTre )) with the data analysis model. To do so, the project is supported by Compute Engine VM Instances to run the API that is stored in this separate repository. The instances are set up using Cron Job to run the application during restart or booting.
 
 # API Usage  
 
