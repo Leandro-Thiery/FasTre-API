@@ -11,6 +11,9 @@ FasTre's API for viewing hospitals data and news
 
 # Deployment in Google Cloud
 GCP is also used to connect the mobile app (code is provided in [this repository](https://github.com/Leonardus028/FasTre )) with the data analysis model. To do so, the project is supported by Compute Engine VM Instances to run the API that is stored in this separate repository. The instances are set up using Cron Job to run the application during restart or booting.
+* Deployed an instance in Compute Engine and enable HTTP traffic
+* Clone code from repository
+* Setup a cronjob to run program on reboot or startup
 
 # API Usage  
 
